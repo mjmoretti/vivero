@@ -1,8 +1,8 @@
 export enum PATHROUTES {
-    LANDING = "/landing",
-    HOME = "/home",
+    PRODUCTS = "/products",
     CART = "/cart",
-    DASHBOARD = "/dashboard",
+    ORDENES = "/ordenes",
     REGISTER = "/register",
-    LOGIN = "/login"
+    LOGIN = "/login",
+    DASHBOARD ="/dashboard"
 }

@@ -8,17 +8,23 @@ import {
   LoginFormValuesInterface,
 } from "@/validators/loginSchema";
 import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
-  const { setDataUser } = useAuth();
+const { setDataUser } = useAuth();
+
+const router = useRouter()
+
   const formik = useFormik<LoginFormValuesInterface>({
     initialValues: initialValuesLogin,
     validationSchema: loginValidationSchema,
     onSubmit: async (values, { resetForm }) => {
       const response = await loguinUserService(values);
       setDataUser(response);
+      alert("Usuario logueado exitosamente")
       console.log("formulario enviado exitosamente", response);
       resetForm();
+      router.push("/products")
     },
   });
 
@@ -70,26 +76,7 @@ const LoginForm = () => {
                 />
                 {formik.errors.password ? <p>{formik.errors.password}</p> : null}
               </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="remember"
-                      aria-describedby="remember"
-                      type="checkbox"
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                    />
-                  </div>
-                  <div className="ml-3 text-sm">
-                    <label
-                      htmlFor="remember"
-                      className="text-gray-500 dark:text-gray-300"
-                    >
-                      Remember me
-                    </label>
-                  </div>
-                </div>
-              </div>
+              
               <button
                 type="submit"
                 disabled={formik.isSubmitting}
@@ -101,7 +88,7 @@ const LoginForm = () => {
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 No tenés cuenta todavía?{" "}
                 <a
-                  href="#"
+                  href="http://localhost:3000/register"
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Registrate

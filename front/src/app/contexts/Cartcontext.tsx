@@ -32,28 +32,12 @@ children: React.ReactElement;
 
 export const CartProvider : React.FC<CartProviderProps> = ({children})=>{
 
-  const {dataUser} = useAuth();
+const {dataUser} = useAuth(); //traemos la información del usuario desde el AuthContext
 
 const[cartItems, setCartItems] = useState<IProduct[]>([])
 
 const [isLoaded, setIsLoaded] = useState(false);
 
-// useEffect(()=>{
-// if(cartItems.length >0){
-//     localStorage.setItem(CARTLOCALSTORAGE,JSON.stringify(cartItems))
-// }
-//  },[cartItems])
-
-
-
-// useEffect(()=>{
-// if (typeof window !== "undefined" && window.localStorage) {
-//       const cartInfo = localStorage.getItem(CARTLOCALSTORAGE);
-//       if (cartInfo) {
-//         setCartItems(JSON.parse(cartInfo));
-//       }
-//     }
-// },[])
 
 useEffect(() => {
   const cartInfo = localStorage.getItem(CARTLOCALSTORAGE);
@@ -68,8 +52,6 @@ useEffect(() => {
     localStorage.setItem(CARTLOCALSTORAGE, JSON.stringify(cartItems));
   }
 }, [cartItems, isLoaded]);
-
-
 
 const addToCart = (product:IProduct)=>{
   if(!dataUser){

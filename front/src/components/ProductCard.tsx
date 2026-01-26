@@ -1,5 +1,7 @@
 
 import { IProduct } from "@/interfaces/IProducts"
+import Link from "next/link"
+
 
 interface CardProps {
 product: IProduct
@@ -8,16 +10,20 @@ product: IProduct
 
 const ProductCard=({product}: CardProps) => {
     return (
-        <div>
-            <div>
-                <img src={product.image} className="w-40 h-40"/>
+        <Link href={`/product/${product.id}`} className="group">
+        <article className=" bg-salmonclaro rounded-xl overflow-hidden cursor-pointer ">
+            <div className="w-full h-64 flex items-center justify-center">
+                <img src={product.image} 
+                // alt={product.name}
+                className="w-full h-auto block rounded-2xl mb-14"/>
             </div>
-            <div>
-                <h3 className="text-xl text-black">{product.name}</h3>
-                <p className="text-xl text-black">{product.description}</p>
-                <p className="text-xl text-black">{product.price}</p>
+            <div className="text-center p-4">
+                <h3 className="text xl font-semibold mb-0.2 text-verdeoscuro">{product.name}</h3>
+             
+                <p className="text xl font-bold text-verdeclaro leading-tight">{product.price}</p>
             </div>
-        </div>
+        </article>
+        </Link>
     )
 
 }

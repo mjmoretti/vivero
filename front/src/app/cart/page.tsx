@@ -1,26 +1,41 @@
 "use client"
 
+import { createOrder } from "@/services/orders.services";
+import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../contexts/Cartcontext";
+import { redirect } from "next/navigation";
 
 
 const CartPage = ()=>{
-    const {cartItems,clearCart,getIdItems,getItemCount,removeFromCart} = useCart()
+    const {cartItems,clearCart,getIdItems,getItemCount,removeFromCart, getTotal} = useCart()
 
-    return(  <div className="container mx-auto px-4 max-w-6xl w-screen flex flex-col items-center justify-center">
-      <div className="flex items-center justify-between w-full mb-8">
-        <h1 className="text-3xl font-bold text-center">
-          Carrito de Compras
-        </h1>
-        {getItemCount() > 0 && (
-          <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-            {getItemCount()}{" "}
-            {getItemCount() === 1 ? "artículo" : "artículos"}
-          </div>
-        )}
+    const {dataUser}= useAuth()
+    
+    if(!dataUser){
+      redirect("/login")
+    }
+
+const handleCheckout = async ()=>{
+  if (!dataUser?.token){
+    alert("Debes iniciar sesión para comprar")
+    return
+  }
+  try {
+    await createOrder(getIdItems(), dataUser?.token)
+    clearCart()
+  } catch (error) {
+    console.log("Error en la compra:", error)
+  }
+}
+
+    return(  
+    <div className="min-h-screen w-full bg-slate-900 flex flex-col items-center pt-10">
+      <div className="container mx-auto px-4 max-w-6xl flex flex-col items-center justify-center">
+        
       </div>
 
       {cartItems.length === 0 ? (
-        <div className="text-center py-16 bg-gray-50 rounded-lg">
+        <div className="text-center py-16 bg-gray-50 rounded-lg mt-15">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-16 w-16 mx-auto text-gray-400 mb-4"
@@ -41,7 +56,7 @@ const CartPage = ()=>{
           </p>
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-md overflow-hidden w-full">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden max-w-4xl w-full mx-auto">
           {/* Encabezado de la tabla */}
           <div className="hidden md:grid grid-cols-12 gap-4 p-4 bg-gray-100 font-semibold text-gray-700 border-b">
             <div className="col-span-6">Productos</div>
@@ -89,7 +104,7 @@ const CartPage = ()=>{
                   </div>
                 </div>
 
-                <div className="md:col-span-2 text-center font-semibold text-blue-600">
+                <div className="md:col-span-2 text-center font-semibold text-gray-600">
                   ${item.price.toFixed(2)}
                 </div>
 
@@ -126,19 +141,21 @@ const CartPage = ()=>{
               <h2 className="text-lg font-semibold text-gray-800">
                 Total del Carrito:
               </h2>
-              <p className="text-2xl font-bold text- text-blue-600">
+              <p className="text-2xl font-bold text- text-gray-600">
+               $ {getTotal()}
                 </p>
-                <p className="text-sm text-gray-500">
-                  {getItemCount()}{" "}
-                  {getItemCount() === 1 ? "artículo": "artículos"}
-                </p>
+                
               </div>
               <div className="flex space-x-3">
                 <button onClick = {clearCart} className="bg-gray-500 hover: bg-gray-600 text-white px-4 py-2 rounded-md font-medium transition-colors duration-200 ">
                   Vaciar Carrito
                 </button>
-              <button className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 font-medium transition-colors duration-200 cursor-pointer">
-                Finalizar compra
+              <button onClick={handleCheckout}
+              className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 font-medium transition-colors duration-200 cursor-pointer">
+                {!dataUser
+                ? "Iniciar sesión para comprar": "Finalizar compra"
+                }
+                
               </button>
               </div>
             </div>

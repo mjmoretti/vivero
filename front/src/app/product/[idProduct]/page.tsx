@@ -37,7 +37,7 @@ const ProductsDetailsPage = async ({params}: ProductsDetailsProps)=> {
             <p
               className="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white"
             >
-              $1,249.99
+              $ {product.price}
             </p>
 
             </div>
@@ -47,17 +47,9 @@ const ProductsDetailsPage = async ({params}: ProductsDetailsProps)=> {
           <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
 
           <p className="mb-6 text-gray-500 dark:text-gray-400">
-            Studio quality three mic array for crystal clear calls and voice
-            recordings. Six-speaker sound system for a remarkably robust and
-            high-quality audio experience. Up to 256GB of ultrafast SSD storage.
+            {product.description}
           </p>
-
-          <p className="text-gray-500 dark:text-gray-400">
-            Two Thunderbolt USB 4 ports and up to two USB 3 ports. Ultrafast
-            Wi-Fi 6 and Bluetooth 5.0 wireless. Color matched Magic Mouse with
-            Magic Keyboard or Magic Keyboard with Touch ID.
-          </p>
-        </div>
+          </div>
       </div>
     </div>
   </section>

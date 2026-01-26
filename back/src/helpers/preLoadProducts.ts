@@ -14,57 +14,75 @@ interface IProduct {
 const productsToPreLoad: IProduct[] = [
   {
    
-    name: "iPhone 11",
-    description: "Experience power and elegance with the iPhone 11: capture stunning moments with its dual-camera system, enjoy exceptional performance, and immerse yourself in a brilliant Liquid Retina display. Discover a world of possibilities in the palm of your hand!",
-    price: 699,
+    name: "Lavanda",
+    description: "La Lavanda, Lavandula Dentata o Lavanda Dentata es una planta perenne, aromática de porte robusto. La Lavanda es conocida por su particular aróma y el intenso color de sus flores. Pertenece a la familia Lamiaceae y es originaria de la región mediterránea, Canarias, Madeira y Sureste de Asia.",
+    price: 1800,
     stock: 10,
-    image: "https://m.media-amazon.com/images/I/41nmV2+lMFS._AC_.jpg",
+    image: "https://viveroagronomia.com.ar/wp-content/uploads/2020/12/Fotos-web-3.png",
     categoryId: 1
   },
   {
   
-    name: "MacBook Air",
-    description: "Embrace efficiency and sophistication with the MacBook Air: lightweight design meets powerful performance, stunning Retina display brings your work to life, and all-day battery life keeps you productive wherever you go. Elevate your computing experience with the MacBook Air.",
-    price: 999,
+    name: "Copete",
+    description: "El Copete, científicamente conocido como Tagetes erecta, es una especie de planta que se ha ganado un lugar especial en jardines y paisajes gracias a su distintiva apariencia y sus múltiples usos. Originaria de México, esta planta pertenece a la familia Compositae y es conocida por su vibrante colorido y su capacidad para atraer a polinizadores.",
+    price: 2500,
     stock: 10,
-    image: "https://www.apple.com/newsroom/images/product/mac/standard/Apple_next-generation-mac-macbookair-macbookpro-mac-mini_11102020_Full-Bleed-Image.jpg.large.jpg",
+    image: "https://viveroagronomia.com.ar/wp-content/uploads/2024/07/21-1.png",
     categoryId: 2
   },
   {
    
-    name: "iPad Pro",
-    description: "Unleash your creativity and productivity with the iPad Pro: powerful performance, stunning Liquid Retina display, and all-day battery life make the iPad Pro the perfect tool for work and play. Transform your ideas into reality with the iPad Pro.",
-    price: 799,
+    name: "Flor de azúcar",
+    description: "La Begonia semperflorens, comunmente llamada Flor de azúcar, es originaria de Brasil. Sus tallos carnosos y ramificados le brindan un porte compacto y elegante, que se completa con sus hojas ovales y redondeadas que pueden asumir coloraciones rojizas en múltiples tonalidades. Sus flores reunidas en cimas axilares de color rosa, rojo o blanco, brotan durante todo el año y componen el toque final de la bella presencia que la Flor de Azúcar brinda a cualquier espacio.",
+    price: 2000,
     stock: 10,
-    image: "https://stylewatch.vtexassets.com/arquivos/ids/239367/Tablet_Apple_APPMHNH3LEA_01.jpg?v=638300335935730000",
+    image: "https://viveroagronomia.com.ar/wp-content/uploads/2024/07/1-10.png",
     categoryId: 3
   },
   {
     
-    name: "Apple Watch Series 6",
+    name: "Sansevieria",
     description: "Stay connected and healthy with the Apple Watch Series 6: track your workouts, monitor your health, and stay in touch with the people and information you care about most. Experience the future of health and wellness with the Apple Watch Series 6.",
-    price: 399,
+    price: 6000,
     stock: 10,
-    image: "https://images-cdn.ubuy.co.id/6500db1bdb76d0072f4a0b53-apple-watch-series-6-gps-40mm-gold.jpg",
+    image: "https://viveroagronomia.com.ar/wp-content/uploads/2020/12/16.jpg",
     categoryId: 4
   },
   {
    
-    name: "AirPods Pro",
-    description: "Immerse yourself in sound with the AirPods Pro: active noise cancellation, transparency mode, and customizable fit make the AirPods Pro the perfect companion for music, calls, and everything in between. Elevate your audio experience with the AirPods Pro.",
-    price: 249,
+    name: "Pothus",
+    description: "El Pothus (Epipremnum aureum), planta nativa del sudeste asiático, es una liana que tiene la característica de trepar mediante raíces aereas. Sus hojas son de color verde intenso con variaciones, según la planta.",
+    price: 6300,
     stock: 10,
-    image: "https://tecnologia.tusitiodecompras.es/wp-content/uploads/2023/03/MPNY3ZMA-510x510.jpg",
+    image: "https://viveroagronomia.com.ar/wp-content/uploads/2024/07/10-3.png",
     categoryId: 5
   },
   {
     
-    name: "HomePod mini",
-    description: "Elevate your home audio experience with the HomePod mini: immersive sound, intelligent assistant, and smart home hub make the HomePod mini the perfect addition to your home. Enjoy a world of music, news, and more with the HomePod mini.",
-    price: 99,
+    name: "Hypoestes",
+    description: "Hypoestes es un género de plantas con flores perteneciente a la familia Acanthaceae. El hypoestes phyllostachya, conocida como hoja de sangre, planta de lunares o paleta de pintor, es una planta herbácea originaria de las selvas tropicales de África y Asia.",
+    price: 1500,
     stock: 10,
-    image: "https://www.latercera.com/resizer/v2/565L7VPQHFBURFJPZVBTCE4WQQ.jpg?auth=5b8bba01037a8fa79c902c5e9acc6491fcdf5e5824743734f8ffa0fd1288e3eb&smart=true&width=800&height=450&quality=70",
+    image: "https://viveroagronomia.com.ar/wp-content/uploads/2024/07/11-1-1.png",
     categoryId: 6
+  },
+  {
+    
+    name: "Cretona",
+    description: "La Cretona es una planta originaria de la India, Java y las regiones de clima tropical del sureste asiático. Se trata de una planta de naturaleza herbácea o semiarbustiva, que puede ser perenne o anual. Sus hojas son opuestas, simples, en forma de corazón y son su principal atractivo ya que se cultiva por la belleza de su color, muy variado y decorativo. Tiene multitud de variedades cuyos colores varían entre el verde y el amarillo, el rojo, el bronce, el púrpura y el gris, todos ellos variadamente jaspeados.",
+    price: 2600,
+    stock: 10,
+    image: "https://viveroagronomia.com.ar/wp-content/uploads/2024/07/Cretona.png",
+    categoryId: 7
+  },
+  {
+    
+    name: "Clavelina",
+    description: "La Clavelina (Dianthus chinensis) es originaria de Corea, Mongolia y China; es este último país el que le da el nombre con el que se conoce de forma popular: clavel chino. Esta disparidad geográfica que mencionamos nos da una pista de una de sus bondades: es una planta sumamente versátil, capaz de resistir el calor pero también el frío. Siempre sorprende con lo colorido de sus flores y la gran variedad de las mismas: rojo, escarlata, blanco, rosa, rosa carmín, púrpura y mezcla de todas las anteriores.",
+    price: 2000,
+    stock: 10,
+    image: "https://viveroagronomia.com.ar/wp-content/uploads/2020/12/8-2.png",
+    categoryId: 8
   }
 ]
 

@@ -3,28 +3,23 @@ import { PATHROUTES } from "./PathRoutes";
 export const NavItems = [
     {
         id:1,
-        nameToRender: "Home",
-        route: PATHROUTES.HOME
+        nameToRender: "Productos",
+        route: PATHROUTES.PRODUCTS
     },
     {
         id:2,
-        nameToRender: "Cart",
+        nameToRender: "Carrito",
         route: PATHROUTES.CART
     },
     {
         id:3,
-        nameToRender: "Dashboard",
-        route: PATHROUTES.DASHBOARD
+        nameToRender: "Órdenes",
+        route: PATHROUTES.ORDENES
     },
     {
         id:4,
-        nameToRender: " Register",
+        nameToRender: " Registro",
         route: PATHROUTES.REGISTER
     },
-    {
-        id:5,
-        nameToRender: "Login",
-        route: PATHROUTES.LOGIN
-        
-    }
+   
 ]
