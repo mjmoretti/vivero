@@ -3,15 +3,14 @@
 import { userSessionInterface } from "@/interfaces/user";
 import { createContext, useContext, useEffect, useState } from "react";
 
-//esta interfaz determina los valores y métodos que tiene  la fc context
 interface AuthContextProps {
-  dataUser: userSessionInterface | null;  //userSessionInterface es una interfaz que da la estructura de la información de sesión. Son los posibles valores que puede tener.
+  dataUser: userSessionInterface | null;  
   setDataUser: (dataUser: userSessionInterface | null) => void;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextProps>({
-  dataUser: null, //inicializo los valores iniciales
+  dataUser: null, 
   setDataUser: () => {},
   logout: () => {},
 });
@@ -28,10 +27,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       localStorage.setItem("userSession", JSON.stringify(dataUser));
     }
   }, [dataUser]);
-//el contexto se carga siempre que se carga la aplicación. Si se refresca la página, lo que hay en el context se cae.Siempre que se cargue el contexto se haga la carga de la información que tengo en el localStorage y a la ponga a disposición en el useSate.
+
   useEffect(() => {
     if (typeof window !== "undefined" && window.localStorage) {
-      const userInfo = localStorage.getItem("userSession"); //en userInfo almaceno lo que tengo en el localStorage
+      const userInfo = localStorage.getItem("userSession"); 
       if (userInfo) {
         setDataUser(JSON.parse(userInfo));
       }

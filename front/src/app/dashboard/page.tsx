@@ -1,9 +1,20 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
+import { useRouter } from 'next/navigation'
 
 const DashboardPage = () => {
     const { dataUser} = useAuth()
+
+const router = useRouter()
+
+useEffect (()=>{
+  if(!dataUser){
+    router.push("/login")
+  }
+},[dataUser])
+if(!dataUser) return null
+
   return (
  <section className="min-h-screen bg-slate-900 py-12">
       <div className="w-fit mx-auto bg-white rounded-xl shadow-md p-8 mt-15">
@@ -28,3 +39,5 @@ const DashboardPage = () => {
 }
 
 export default DashboardPage
+
+

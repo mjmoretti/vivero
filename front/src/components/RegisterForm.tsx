@@ -14,7 +14,6 @@ const formik = useFormik<RegisterFormValuesInterface>({
     onSubmit: async (values, {resetForm})=>{
         const response = await registerUserService(values)
         alert("Usuario registrado exitosamente")
-        console.log("formulario enviado exitosamente", response)
         resetForm()
         router.push('/login')
     }

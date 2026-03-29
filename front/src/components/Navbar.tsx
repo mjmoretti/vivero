@@ -6,8 +6,10 @@ import { useAuth } from "@/app/contexts/AuthContext";
 import Image from "next/image";
 import { PATHROUTES } from "@/utils/PathRoutes";
 
+
 const Navbar = () => {
   const { dataUser, logout } = useAuth()
+ 
 
   return (
     <div className="flex items-center justify-between h-[100px] w-full bg-[#fbf7ec]">

@@ -85,6 +85,16 @@ function Orderslist (){
                   </p>
                 </div>
 
+                <div>
+                  <p className="text-sm text-slate-400">Beneficio:</p>
+                  <p className="font-medium">
+                    {order.products.length >=2?(
+                      <p>envío gratis</p>
+                    ): <p>envío regular</p>
+                  }
+                  </p>
+                </div>
+
                 {/* Status */}
                  <div> 
                   <p className="text-sm text-slate-400 mb-1">Estado:</p>

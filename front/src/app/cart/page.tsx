@@ -3,25 +3,33 @@
 import { createOrder } from "@/services/orders.services";
 import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../contexts/Cartcontext";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 
 const CartPage = ()=>{
     const {cartItems,clearCart,getIdItems,getItemCount,removeFromCart, getTotal} = useCart()
 
     const {dataUser}= useAuth()
-    
-    if(!dataUser){
-      redirect("/login")
-    }
 
+    const router = useRouter()
+    
+    useEffect (()=>{
+      if(!dataUser){
+        router.push("/login")
+      }
+    },[dataUser])
+    if(!dataUser) return null
+    
 const handleCheckout = async ()=>{
   if (!dataUser?.token){
     alert("Debes iniciar sesión para comprar")
     return
   }
+  
   try {
     await createOrder(getIdItems(), dataUser?.token)
+    
     clearCart()
   } catch (error) {
     console.log("Error en la compra:", error)
