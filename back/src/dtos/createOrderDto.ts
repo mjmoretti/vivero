@@ -1,4 +1,7 @@
 export interface CreateOrderDto {
   userId: number;
-  products: number[];
+  products: {
+    productId: number;
+    quantity: number;
+  }[];
 }

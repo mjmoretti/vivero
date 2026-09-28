@@ -4,40 +4,72 @@ import { useAuth } from '../contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 
 const DashboardPage = () => {
-    const { dataUser} = useAuth()
+  const { dataUser } = useAuth()
+  const router = useRouter()
 
-const router = useRouter()
+  useEffect(() => {
+    if (!dataUser) {
+      router.push("/login")
+    }
+  }, [dataUser])
 
-useEffect (()=>{
-  if(!dataUser){
-    router.push("/login")
-  }
-},[dataUser])
-if(!dataUser) return null
+  if (!dataUser) return null
+
+  const inicial = dataUser?.user.name?.charAt(0).toUpperCase()
 
   return (
- <section className="min-h-screen bg-slate-900 py-12">
-      <div className="w-fit mx-auto bg-white rounded-xl shadow-md p-8 mt-15">
+    <section className="min-h-screen bg-slate-900 py-12 flex items-center justify-center">
+      <div className="bg-white rounded-xl shadow-md p-8 w-full max-w-md">
 
-        <h1 className="text-3xl font-semibold text-verdeclaro mb-6">
-          Mi Cuenta
-        </h1>
-
-        <div className="grid grid-cols-2 gap-4 text-gray-700">
-          <p><strong>Nombre:</strong> {dataUser?.user.name}</p>
-          <p><strong>Email:</strong> {dataUser?.user.email}</p>
-          <p><strong>Dirección:</strong> {dataUser?.user.address}</p>
-          <p><strong>Teléfono:</strong> {dataUser?.user.phone}</p>
-          <p><strong>Rol:</strong> {dataUser?.user.role}</p>
-          <p><strong>ID:</strong> {dataUser?.user.id}</p>
+        {/* Avatar e info principal */}
+        <div className="flex flex-col items-center mb-6">
+          <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-2xl font-medium mb-3">
+            {inicial}
+          </div>
+          <h1 className="text-lg font-medium text-gray-800">{dataUser?.user.name}</h1>
+          {/* <span className="mt-1 text-xs bg-green-100 text-green-700 px-3 py-1 rounded-md">
+            {dataUser?.user.role}
+          </span> */}
         </div>
 
+        {/* Datos personales */}
+        <div className="border-t border-gray-100 pt-5 mb-5">
+          <p className="text-xs text-gray-900 uppercase tracking-wide font-medium mb-3">Datos personales</p>
+          <div className="space-y-3">
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-900">📧 Email</span>
+              <span className="text-gray-800">{dataUser?.user.email}</span>
+            </div>
+            <div className="flex justify-between text-sm border-t border-gray-100 pt-3">
+              <span className="text-gray-900">📞 Teléfono</span>
+              <span className="text-gray-800">{dataUser?.user.phone}</span>
+            </div>
+            <div className="flex justify-between text-sm border-t border-gray-100 pt-3">
+              <span className="text-gray-900">📍 Dirección</span>
+              <span className="text-gray-800">{dataUser?.user.address}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Cuenta */}
+        <div className="border-t border-gray-100 pt-5 mb-6">
+          <p className="text-xs text-gray-900 uppercase tracking-wide font-medium mb-3">Cuenta</p>
+          <div className="flex justify-between text-sm">
+            <span className="text-gray-900">🪪 ID</span>
+            <span className="text-gray-800">#{dataUser?.user.id}</span>
+          </div>
+        </div>
+
+        {/* Botón órdenes */}
+        <button
+  onClick={() => router.push("/ordenes")}
+  className="w-full flex items-center justify-center gap-2 py-2 rounded-md text-sm text-white font-semibold bg-green-600 hover:bg-green-700 transition-colors cursor-pointer"
+>
+  Ver mis órdenes →
+</button>
       </div>
     </section>
-
   )
 }
 
 export default DashboardPage
-
-

@@ -4,6 +4,7 @@ interface RegisterUserDto {
     password: string
     address: string
     phone: string
+    image?: string | null
 }
 
 export default RegisterUserDto;

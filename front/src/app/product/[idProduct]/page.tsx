@@ -1,60 +1,61 @@
 import ButtonAddToCart from "@/components/ButtonAddToCart"
+import Container from "@/components/Container"
 import { IProduct } from "@/interfaces/IProducts"
 import { getProductByIdService } from "@/services/products.services"
 import { notFound } from "next/navigation"
 
 interface ProductsDetailsProps {
-    params:{
-idProduct : string
-    }
+  params: Promise<{
+    idProduct: string
+  }>
 }
 
-const ProductsDetailsPage = async ({params}: ProductsDetailsProps)=> {
-    const {idProduct} = params 
+const ProductsDetailsPage = async ({ params }: ProductsDetailsProps) => {
+  const { idProduct } = await params
 
-    let product: IProduct
-    try {
-        product = await getProductByIdService(idProduct)
-    } catch (error) {
-        notFound()
-    }
-    return(
-        <section className="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
-    <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
-      <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
-        <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
-          <img className="w-full" src= {product.image} alt="" />
-          
-        </div>
+  let product: IProduct
+  try {
+    product = await getProductByIdService(idProduct)
+  } catch (error) {
+    notFound()
+  }
 
-        <div className="mt-6 sm:mt-8 lg:mt-0">
-          <h1
-            className="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"
-          >
-          {product.name}
-          </h1>
-          <div className="mt-4 sm:items-center sm:gap-4 sm:flex">
-            <p
-              className="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white"
-            >
-              $ {product.price}
-            </p>
+  return (
+    <section className="py-8 bg-white md:py-16 antialiased">
+      <Container>
+        <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
+          <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
+            <img
+              className="w-full h-auto rounded-lg"
+              src={product.image}
+              alt={product.name}
+            />
+          </div>
 
+          <div className="mt-6 sm:mt-8 lg:mt-0">
+            <h1 className="text-xl font-semibold text-gray-900 sm:text-5xl">
+              {product.name}
+            </h1>
+            <div className="mt-4 sm:items-center sm:gap-4 sm:flex">
+              <p className="text-2xl font-extrabold text-gray-900 sm:text-4xl">
+                $ {product.price}
+              </p>
             </div>
 
-          <ButtonAddToCart product={product}/>
+            <ButtonAddToCart product={product} />
 
-          <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
+            <hr className="my-6 md:my-8 border-gray-200" />
 
-          <p className="mb-6 text-gray-500 dark:text-gray-400">
-            {product.description}
-          </p>
+            <p className="mb-6 text-gray-500">
+              {product.description}
+            </p>
           </div>
-      </div>
-    </div>
-  </section>
-    )
+        </div>
+      </Container>
+    </section>
+  )
 }
+
 export default ProductsDetailsPage;
 
 

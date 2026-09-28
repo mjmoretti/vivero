@@ -1,8 +1,14 @@
 import { IProduct } from "./IProducts";
 
-export interface Order{
-    id: number,
-    products: IProduct[],
-    date: string,
-    status: string
-} 
+export interface IOrderDetail {
+  id: number;
+  quantity: number;
+  product: IProduct;
+}
+
+export interface Order {
+  id: number;
+  date: string;
+  status: string;
+  orderDetails: IOrderDetail[];
+}

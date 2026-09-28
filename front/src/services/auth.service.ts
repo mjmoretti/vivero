@@ -1,19 +1,14 @@
 import { LoginFormValuesInterface } from "@/validators/loginSchema";
-import { RegisterFormValuesInterface } from "@/validators/registeSchema";
 
-export const registerUserService = async (
-  userData: RegisterFormValuesInterface
-) => {
+export const registerUserService = async (formData: FormData) => {
   try {
     const response = await fetch("http://localhost:3001/users/register", {
       method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(userData),
+      body: formData,
     });
     if (response.ok) {
       return response.json();
     } else {
-      alert("No pudimos registrarte");
       throw new Error("Registro fallido");
     }
   } catch (error: any) {
@@ -31,7 +26,6 @@ export const loguinUserService = async (userData: LoginFormValuesInterface) => {
     if (response.ok) {
       return response.json();
     } else {
-      alert("No pudimos loguearte");
       throw new Error("Login fallido");
     }
   } catch (error: any) {

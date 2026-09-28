@@ -2,11 +2,11 @@ import {
   Column,
   Entity,
   JoinColumn,
-  ManyToMany,
   ManyToOne,
+   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Order } from "./Order";
+import { OrderDetail } from "./OrderDetail";
 import { Category } from "./Category";
 
 @Entity({ name: "products" })
@@ -35,4 +35,10 @@ export class Product {
   @ManyToOne(() => Category, (category) => category.products)
   @JoinColumn({ name: "categoryId" })
   category: Category;
+
+  @OneToMany(
+  () => OrderDetail,
+  (orderDetail) => orderDetail.product
+)
+orderDetails: OrderDetail[];
 }

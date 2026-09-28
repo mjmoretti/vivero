@@ -36,6 +36,12 @@ export class User {
     })
     role: Role;
 
+    @Column({
+        nullable: true,
+        default: null
+    })
+    image: string;
+
     @OneToOne(() => Credential)
     @JoinColumn()
     credential: Credential;
@@ -43,4 +49,3 @@ export class User {
     @OneToMany(() => Order, order => order.user)
     orders: Order[];
 }
-

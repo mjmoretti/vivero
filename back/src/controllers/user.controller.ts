@@ -1,19 +1,25 @@
 import { Request, Response } from "express";
 import { catchedController } from "../utils/catchedController";
-import {
-  loginUserService,
-  registerUserService,
-} from "../services/user.service";
+import { loginUserService, registerUserService } from "../services/user.service";
+import { uploadImageService } from "../services/cloudinary.service";
+import multer from "multer";
 
 export const registerUser = catchedController(
   async (req: Request, res: Response) => {
     const { email, password, name, address, phone } = req.body;
+    
+    let imageUrl: string | null = null;
+    if (req.file) {
+      imageUrl = await uploadImageService(req.file.path);
+    }
+
     const newUser = await registerUserService({
       email,
       password,
       name,
       address,
       phone,
+      image: imageUrl,
     });
     res.status(201).send(newUser);
   }

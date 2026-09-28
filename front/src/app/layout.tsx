@@ -20,8 +20,8 @@ const geistMono = Geist_Mono({
 const belleza = Belleza({
   variable: "--font-belleza",
   subsets: ["latin"],
-  weight: ["400"]
-})
+  weight: ["400"],
+});
 
 export const metadata: Metadata = {
   title: "Vivero Agronomía",

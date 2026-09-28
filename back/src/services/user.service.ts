@@ -18,7 +18,13 @@ export const checkUserExists = async (email: string): Promise<boolean> => {
 export const registerUserService = async (
   registerUserDto: RegisterUserDto
 ): Promise<User> => {
-  const user = await UserRepository.create(registerUserDto);
+  const user = UserRepository.create({
+    name: registerUserDto.name,
+    email: registerUserDto.email,
+    address: registerUserDto.address,
+    phone: registerUserDto.phone,
+    image: registerUserDto.image ?? undefined,
+  });
   await UserRepository.save(user);
   const credential = await createCredentialService({
     password: registerUserDto.password,

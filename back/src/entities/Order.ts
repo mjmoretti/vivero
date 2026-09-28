@@ -2,13 +2,13 @@ import {
   Column,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { OrderDetail } from "./OrderDetail";
 import { User } from "./User";
-import { Product } from "./Product";
+
 
 // status: pending, approved, rejected
 
@@ -27,7 +27,9 @@ export class Order {
   @JoinColumn({ name: "userId" })
   user: User;
 
-  @ManyToMany(() => Product)
-  @JoinTable()
-  products: Product[];
+ @OneToMany(
+  () => OrderDetail,
+  (orderDetail) => orderDetail.order
+)
+orderDetails: OrderDetail[];
 }

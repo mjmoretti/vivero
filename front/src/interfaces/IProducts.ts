@@ -7,3 +7,7 @@ export interface IProduct {
     image: string;
     categoryId: number;   
 }
+
+export interface ICartItem extends IProduct {
+  quantity: number;
+}
