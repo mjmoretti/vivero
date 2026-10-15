@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
 import { catchedController } from "../utils/catchedController";
-import { loginUserService, registerUserService } from "../services/user.service";
+import { loginUserService, registerUserService, updateUserImageService } from "../services/user.service";
 import { uploadImageService } from "../services/cloudinary.service";
-import multer from "multer";
 
 export const registerUser = catchedController(
-  async (req: Request, res: Response) => {
+  async (req: Request & { file?: Express.Multer.File }, res: Response) => {
     const { email, password, name, address, phone } = req.body;
     
     let imageUrl: string | null = null;
@@ -34,3 +33,18 @@ export const login = catchedController(async (req: Request, res: Response) => {
     token: user.token,
   });
 });
+
+export const updateUserImage = catchedController(
+  async (req: Request & { file?: Express.Multer.File }, res: Response) => {
+    const { userId } = req.body;
+
+    if (!req.file) {
+      res.status(400).send({ message: "No se recibió ninguna imagen" });
+      return;
+    }
+
+    const imageUrl = await uploadImageService(req.file.path);
+    const updatedUser = await updateUserImageService(userId, imageUrl);
+    res.status(200).send(updatedUser);
+  }
+);

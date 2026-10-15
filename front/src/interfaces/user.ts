@@ -8,7 +8,8 @@ export interface userSessionInterface {
         phone: string;
         orders: [];
         role: string;
-        id: number
+        id: number;
+        image?: string | null;
     }
 }
 

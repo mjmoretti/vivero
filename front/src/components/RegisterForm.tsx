@@ -62,12 +62,45 @@ const RegisterForm = () => {
   return (
     <section className="bg-salmonclaro">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 mt-4 mb-4">
+        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-8 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 mt-4 mb-4">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl dark:text-white">
               Registrate
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={formik.handleSubmit}>
+
+            {/* Foto de perfil */}
+<div className="flex flex-col items-center">
+  <label
+    htmlFor="image"
+    className="relative w-28 h-28 rounded-full bg-gray-100 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer overflow-hidden hover:bg-gray-200 transition-colors"
+  >
+    {imagePreview ? (
+      <img
+        src={imagePreview}
+        alt="Vista previa"
+        className="w-full h-full object-cover"
+      />
+    ) : (
+      <div className="flex flex-col items-center text-gray-400">
+        <span className="text-3xl">📷</span>
+        <span className="text-xs mt-1">Agregar foto</span>
+      </div>
+    )}
+
+    <input
+      id="image"
+      type="file"
+      accept="image/jpeg,image/png,image/webp"
+      onChange={handleImageChange}
+      className="hidden"
+    />
+  </label>
+
+  <p className="mt-2 text-sm text-gray-500">
+    Foto de perfil (opcional)
+  </p>
+</div>
               
               <div>
                 <label className="block mb-2 text-sm font-medium dark:text-white">
@@ -165,25 +198,7 @@ const RegisterForm = () => {
                 {formik.errors.phone && <p className="text-red-500">{formik.errors.phone}</p>}
               </div>
 
-              {/* Campo de imagen */}
-              <div>
-                <label className="block mb-2 text-sm font-medium dark:text-white">
-                  Foto de perfil (opcional)
-                </label>
-                <input
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp"
-                  onChange={handleImageChange}
-                  className="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5 cursor-pointer"
-                />
-                {imagePreview && (
-                  <img
-                    src={imagePreview}
-                    alt="Vista previa"
-                    className="mt-3 w-20 h-20 rounded-full object-cover mx-auto"
-                  />
-                )}
-              </div>
+              
 
               <button
                 type="submit"

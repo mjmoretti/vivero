@@ -57,3 +57,14 @@ export const loginUserService = async (
     throw new ClientError("Invalid password");
   }
 };
+
+export const updateUserImageService = async (
+  userId: number,
+  imageUrl: string
+): Promise<User> => {
+  const user = await UserRepository.findOneBy({ id: userId });
+  if (!user) throw new Error("User not found");
+  user.image = imageUrl;
+  await UserRepository.save(user);
+  return user;
+};

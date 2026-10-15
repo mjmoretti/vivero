@@ -4,5 +4,6 @@ export enum PATHROUTES {
     ORDENES = "/ordenes",
     REGISTER = "/register",
     LOGIN = "/login",
-    DASHBOARD ="/dashboard"
+    DASHBOARD ="/dashboard",
+    ADMIN = "/admin",
 }

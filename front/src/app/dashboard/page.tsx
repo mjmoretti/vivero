@@ -1,11 +1,14 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useRouter } from 'next/navigation'
+import Swal from 'sweetalert2'
 
 const DashboardPage = () => {
-  const { dataUser } = useAuth()
+  const { dataUser, setDataUser } = useAuth()
   const router = useRouter()
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [isUploading, setIsUploading] = useState(false)
 
   useEffect(() => {
     if (!dataUser) {
@@ -17,19 +20,76 @@ const DashboardPage = () => {
 
   const inicial = dataUser?.user.name?.charAt(0).toUpperCase()
 
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setIsUploading(true)
+    try {
+      const formData = new FormData()
+      formData.append("image", file)
+
+      const response = await fetch("http://localhost:3001/users/image", {
+        method: "PATCH",
+        headers: {
+          Authorization: dataUser.token,
+        },
+        body: formData,
+      })
+
+      if (!response.ok) throw new Error("Error al subir imagen")
+
+      const updatedUser = await response.json()
+      setDataUser({ ...dataUser, user: updatedUser })
+
+      Swal.fire({
+        icon: "success",
+        title: "¡Éxito!",
+        text: "Imagen actualizada correctamente",
+      })
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No pudimos actualizar la imagen",
+      })
+    } finally {
+      setIsUploading(false)
+    }
+  }
+
   return (
     <section className="min-h-screen bg-slate-900 py-12 flex items-center justify-center">
       <div className="bg-white rounded-xl shadow-md p-8 w-full max-w-md">
 
         {/* Avatar e info principal */}
         <div className="flex flex-col items-center mb-6">
-          <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-2xl font-medium mb-3">
-            {inicial}
-          </div>
+          <label className="cursor-pointer relative group">
+            {dataUser?.user.image ? (
+              <img
+                src={dataUser.user.image}
+                alt="Foto de perfil"
+                className="w-20 h-20 rounded-full object-cover mb-3"
+              />
+            ) : (
+              <div className="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-2xl font-medium mb-3">
+                {inicial}
+              </div>
+            )}
+            <div className="absolute inset-0 rounded-full bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center mb-3">
+              <span className="text-white text-xs font-medium">
+                {isUploading ? "Subiendo..." : "Cambiar foto"}
+              </span>
+            </div>
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              onChange={handleImageChange}
+              className="hidden"
+              disabled={isUploading}
+            />
+          </label>
           <h1 className="text-lg font-medium text-gray-800">{dataUser?.user.name}</h1>
-          {/* <span className="mt-1 text-xs bg-green-100 text-green-700 px-3 py-1 rounded-md">
-            {dataUser?.user.role}
-          </span> */}
         </div>
 
         {/* Datos personales */}
@@ -62,11 +122,20 @@ const DashboardPage = () => {
 
         {/* Botón órdenes */}
         <button
-  onClick={() => router.push("/ordenes")}
-  className="w-full flex items-center justify-center gap-2 py-2 rounded-md text-sm text-white font-semibold bg-green-600 hover:bg-green-700 transition-colors cursor-pointer"
->
-  Ver mis órdenes →
-</button>
+          onClick={() => router.push("/ordenes")}
+          className="w-full flex items-center justify-center gap-2 py-2 rounded-md text-sm text-white font-semibold bg-green-600 hover:bg-green-700 transition-colors cursor-pointer"
+        >
+          Ver mis órdenes →
+        </button>
+        {/* Botón admin - solo visible para administradores */}
+{dataUser?.user.role === "admin" && (
+  <button
+    onClick={() => router.push("/admin")}
+    className="w-full flex items-center justify-center gap-2 py-2 rounded-md text-sm text-white font-semibold bg-verdeclaro hover:bg-verdeoscuro transition-colors cursor-pointer mt-3"
+  >
+    Panel de administración →
+  </button>
+)}
       </div>
     </section>
   )

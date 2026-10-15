@@ -15,7 +15,7 @@ const ProductCard=({product}: CardProps) => {
             <div className="relative w-full h-64 flex items-center justify-center overflow-hidden">
     <img
         src={product.image}
-        className="w-full h-auto block rounded-2xl mb-14"
+        className="w-full h-auto block rounded-2xl mb-1"
     />
 
     <div
@@ -39,9 +39,9 @@ const ProductCard=({product}: CardProps) => {
                 className="w-full h-auto block rounded-2xl mb-14"/>
             </div> */}
             <div className="text-center p-4">
-                <h3 className="text xl font-semibold mb-0.2 text-verdeoscuro">{product.name}</h3>
+                <h3 className="text-xl font-semibold mb-0.2 text-verdeoscuro">{product.name}</h3>
              
-                <p className="text xl font-bold text-verdeclaro leading-tight">{product.price}</p>
+                {/* <p className="text xl font-bold text-verdeclaro leading-tight">{product.price}</p> */}
             </div>
         </article>
         </Link>
