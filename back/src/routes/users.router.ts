@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 import validateUserRegister from "../middlewares/userRegister.middleware";
 import validateUserLogin from "../middlewares/userLogin.middleware";
-import { login, registerUser, updateUserImage } from "../controllers/user.controller";
+import { login, registerUser, updateUserImage, updateUserData } from "../controllers/user.controller";
 import checkLogin from "../middlewares/checkLogin.middleware";
 import { OrderRepository } from "../repositories/order.repository";
 import upload from "../middlewares/upload.middleware";
@@ -12,7 +12,9 @@ usersRouter.post("/register", upload.single("image"), validateUserRegister, regi
 
 usersRouter.post("/login", validateUserLogin, login);
 
-usersRouter.patch("/image", checkLogin, upload.single("image"), updateUserImage);
+usersRouter.patch("/image", upload.single("image"), checkLogin, updateUserImage);
+
+usersRouter.patch("/data", checkLogin, updateUserData);
 
 usersRouter.get("/orders", checkLogin, async (req: Request, res: Response) => {
   const { userId } = req.body;

@@ -198,9 +198,7 @@ const RegisterForm = () => {
                 {formik.errors.phone && <p className="text-red-500">{formik.errors.phone}</p>}
               </div>
 
-              
-
-              <button
+               <button
                 type="submit"
                 disabled={formik.isSubmitting}
                 className="w-full text-white bg-green-600 hover:bg-green-700 font-semibold focus:ring-4 focus:outline-none focus:ring-green-300 rounded-lg text-sm px-5 py-2.5 text-center transition-colors cursor-pointer"

@@ -47,7 +47,7 @@ const CartPage = () => {
     <div className="min-h-screen bg-slate-900 py-10">
       <Container>
         {cartItems.length === 0 ? (
-          <div className="text-center py-16 bg-gray-50 rounded-lg mt-15">
+          <div className="text-center py-8 bg-gray-50 rounded-lg mt-15 max-w-md mx-auto">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-16 w-16 mx-auto text-gray-400 mb-4"

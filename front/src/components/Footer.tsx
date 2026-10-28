@@ -29,7 +29,7 @@ const Footer = () => {
         <div className="my-6 border-t border-[#1f4d45]" />
 
         <div className="space-y-1 text-sm">
-          <p>Av. Francisco Beiró 2424, C1419 CABA</p>
+          <p>Av. Dorrego 2069, C5519 Guaymallén MENDOZA</p>
           <p>Vivero Agronomía 2026 – Todos los derechos reservados</p>
         </div>
       </Container>

@@ -62,9 +62,22 @@ export const updateUserImageService = async (
   userId: number,
   imageUrl: string
 ): Promise<User> => {
-  const user = await UserRepository.findOneBy({ id: userId });
+  if (!userId) throw new Error("userId inválido");
+  const user = await UserRepository.findOneBy({ id: Number(userId) });
   if (!user) throw new Error("User not found");
   user.image = imageUrl;
+  await UserRepository.save(user);
+  return user;
+};
+
+export const updateUserDataService = async (
+  userId: number,
+  data: Partial<{ name: string; address: string; phone: string }>
+): Promise<User> => {
+  if (!userId) throw new Error("userId inválido");
+  const user = await UserRepository.findOneBy({ id: Number(userId) });
+  if (!user) throw new Error("User not found");
+  Object.assign(user, data);
   await UserRepository.save(user);
   return user;
 };

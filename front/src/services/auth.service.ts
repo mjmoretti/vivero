@@ -32,3 +32,20 @@ export const loguinUserService = async (userData: LoginFormValuesInterface) => {
     throw new Error(error);
   }
 };
+export const updateUserDataService = async (
+  token: string,
+  data: { name: string; address: string; phone: string }
+) => {
+  const response = await fetch("http://localhost:3001/users/data", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) {
+    throw new Error("No se pudieron actualizar los datos");
+  }
+  return response.json();
+};
