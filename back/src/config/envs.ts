@@ -13,3 +13,5 @@ export const JWT_SECRET: string = process.env.JWT_SECRET || "secret";
 export const CLOUDINARY_CLOUD_NAME: string = process.env.CLOUDINARY_CLOUD_NAME || "";
 export const CLOUDINARY_API_KEY: string = process.env.CLOUDINARY_API_KEY || "";
 export const CLOUDINARY_API_SECRET: string = process.env.CLOUDINARY_API_SECRET || "";
+export const MP_ACCESS_TOKEN = process.env.MP_ACCESS_TOKEN || "";
+export const FRONT_URL = process.env.FRONT_URL || "http://localhost:3000";

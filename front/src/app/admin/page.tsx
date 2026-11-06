@@ -4,14 +4,17 @@ import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IProduct } from "@/interfaces/IProducts";
+import { ICategory } from "@/interfaces/ICategory";
 import { getAllProductsService } from "@/services/products.services";
+import { getCategories } from "@/services/category.service";
 import Swal from "sweetalert2";
 
 const AdminPage = () => {
-  const { dataUser } = useAuth();
+  const { dataUser, isLoading: authLoading } = useAuth();
   const router = useRouter();
 
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<IProduct | null>(null);
@@ -27,6 +30,7 @@ const AdminPage = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   useEffect(() => {
+    if (authLoading) return;
     if (!dataUser) {
       router.push("/login");
       return;
@@ -36,7 +40,8 @@ const AdminPage = () => {
       return;
     }
     fetchProducts();
-  }, [dataUser]);
+    fetchCategories();
+  }, [dataUser, authLoading]);
 
   const fetchProducts = async () => {
     setIsLoading(true);
@@ -45,7 +50,18 @@ const AdminPage = () => {
     setIsLoading(false);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const fetchCategories = async () => {
+    try {
+      const data = await getCategories();
+      setCategories(data);
+    } catch {
+      Swal.fire({ icon: "error", title: "Error", text: "No se pudieron cargar las categorías" });
+    }
+  };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -156,7 +172,7 @@ const AdminPage = () => {
     setImagePreview(null);
   };
 
-  if (!dataUser || dataUser.user.role !== "admin") return null;
+  if (authLoading || !dataUser || dataUser.user.role !== "admin") return null;
 
   return (
     <section className="min-h-screen bg-slate-900 py-10 px-6">
@@ -188,19 +204,36 @@ const AdminPage = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-verdeclaro"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-verdeclaro"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Categoría ID</label>
-                  <input
-                    type="number"
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+                  <select
                     name="categoryId"
                     value={formData.categoryId}
                     onChange={handleInputChange}
                     required
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-verdeclaro"
-                  />
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-800 bg-white focus:outline-none focus:border-verdeclaro cursor-pointer"
+                  >
+                    <option value="">Seleccioná una categoría</option>
+                    {categories.map((category) =>
+                      category.subcategories && category.subcategories.length > 0 ? (
+                        <optgroup key={category.id} label={category.name}>
+                          <option value={category.id}>{category.name} (general)</option>
+                          {category.subcategories.map((sub) => (
+                            <option key={sub.id} value={sub.id}>
+                              {sub.name}
+                            </option>
+                          ))}
+                        </optgroup>
+                      ) : (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      )
+                    )}
+                  </select>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Precio</label>
@@ -210,7 +243,7 @@ const AdminPage = () => {
                     value={formData.price}
                     onChange={handleInputChange}
                     required
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-verdeclaro"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-verdeclaro"
                   />
                 </div>
                 <div>
@@ -221,7 +254,7 @@ const AdminPage = () => {
                     value={formData.stock}
                     onChange={handleInputChange}
                     required
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-verdeclaro"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-verdeclaro"
                   />
                 </div>
               </div>
@@ -234,7 +267,7 @@ const AdminPage = () => {
                   onChange={handleInputChange}
                   required
                   rows={3}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-verdeclaro"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-verdeclaro"
                 />
               </div>
 
@@ -246,7 +279,7 @@ const AdminPage = () => {
                   type="file"
                   accept="image/jpeg,image/png,image/webp"
                   onChange={handleImageChange}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm cursor-pointer"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-800 cursor-pointer"
                 />
                 {imagePreview && (
                   <img src={imagePreview} alt="Preview" className="mt-3 w-24 h-24 object-cover rounded-lg" />

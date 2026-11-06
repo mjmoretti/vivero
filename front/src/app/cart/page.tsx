@@ -2,10 +2,12 @@
 
 import Container from "@/components/Container";
 import { createOrder } from "@/services/orders.services";
+import { createPaymentService } from "@/services/payment.service";
 import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../contexts/Cartcontext";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const CartPage = () => {
   const {
@@ -16,30 +18,57 @@ const CartPage = () => {
     getTotal,
   } = useCart();
 
-  const { dataUser } = useAuth();
+  const { dataUser, isLoading } = useAuth();
   const router = useRouter();
+  const [isPaying, setIsPaying] = useState(false);
 
   useEffect(() => {
-    if (!dataUser) {
+    if (!isLoading && !dataUser) {
       router.push("/login");
     }
-  }, [dataUser, router]);
+  }, [dataUser, isLoading, router]);
 
-  if (!dataUser) return null;
+  if (isLoading || !dataUser) return null;
 
   const handleCheckout = async () => {
     if (!dataUser.token) {
-      alert("Debes iniciar sesión para comprar");
+      Swal.fire({
+        icon: "warning",
+        title: "¡Atención!",
+        text: "Debes iniciar sesión para comprar",
+      });
       return;
     }
 
-    console.log("IDs enviados:", getOrderItems());
-
+    setIsPaying(true);
     try {
-      await createOrder(getOrderItems(), dataUser.token);
-      clearCart();
+      // 1. Se crea la orden, como antes
+      const order = await createOrder(getOrderItems(), dataUser.token);
+      if (!order?.id) throw new Error("No se pudo crear la orden");
+
+      // 2. Se pide el link de pago a Mercado Pago (a través del backend)
+      const items = cartItems.map((item) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+      }));
+      const paymentUrl = await createPaymentService(
+        items,
+        order.id,
+        dataUser.token
+      );
+
+      // 3. Se manda a la persona a pagar
+      window.location.href = paymentUrl;
     } catch (error) {
       console.log("Error en la compra:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No pudimos iniciar el pago",
+      });
+      setIsPaying(false);
     }
   };
 
@@ -151,6 +180,7 @@ const CartPage = () => {
                 <div className="flex gap-3">
                   <button
                     onClick={clearCart}
+                    disabled={isPaying}
                     className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md"
                   >
                     Vaciar carrito
@@ -158,9 +188,10 @@ const CartPage = () => {
 
                   <button
                     onClick={handleCheckout}
-                    className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md"
+                    disabled={isPaying}
+                    className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-md disabled:opacity-60"
                   >
-                    Finalizar compra
+                    {isPaying ? "Redirigiendo a Mercado Pago..." : "Finalizar compra"}
                   </button>
                 </div>
               </div>
