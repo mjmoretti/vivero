@@ -3,41 +3,50 @@
 import { useAuth } from "@/app/contexts/AuthContext";
 import { Order } from "@/interfaces/orders.interface";
 import { getAllOrders } from "@/services/orders.services";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 function Orderslist() {
-  const { dataUser } = useAuth();
-
-  if (!dataUser) {
-    redirect("/login");
-  }
+  const { dataUser, isLoading: authLoading } = useAuth();
+  const router = useRouter();
 
   const [orders, setOrders] = useState<Order[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Redirige al login solo cuando ya terminó de leer la sesión
   useEffect(() => {
+    if (!authLoading && !dataUser) {
+      router.push("/login");
+    }
+  }, [authLoading, dataUser, router]);
+
+  // Trae las órdenes cuando hay sesión
+  useEffect(() => {
+    if (authLoading) return;
+
     const fetchOrders = async () => {
       if (!dataUser?.token) {
         setOrders([]);
         return;
       }
-      setIsLoading(true);
+      setIsFetching(true);
       setError(null);
 
       try {
-        const orderResponse = await getAllOrders(dataUser?.token);
+        const orderResponse = await getAllOrders(dataUser.token);
         setOrders(orderResponse);
       } catch (error) {
         console.error("Error al traer la información");
         setOrders([]);
       } finally {
-        setIsLoading(false);
+        setIsFetching(false);
       }
     };
     fetchOrders();
-  }, [dataUser?.token]);
+  }, [authLoading, dataUser?.token]);
+
+  if (authLoading || !dataUser) return null;
 
   return (
     <section className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 text-white p-10">
@@ -50,7 +59,7 @@ function Orderslist() {
           </div>
         )}
 
-        {isLoading ? (
+        {isFetching ? (
           <div className="text-center py-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-2"></div>
             <p>Cargando órdenes...</p>
