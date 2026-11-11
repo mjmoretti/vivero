@@ -1,5 +1,4 @@
-import { AppDataSource } from "../config/dataSource";
-import { Category } from "../entities/Category";
+
 import { CategoryRepository } from "../repositories/category.respository";
 
 export const preLoadCategories = async () => {

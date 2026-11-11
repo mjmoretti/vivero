@@ -8,6 +8,8 @@ import { Product } from "../entities/Product";
 import { OrderDetail } from "../entities/OrderDetail";
 export const AppDataSource = new DataSource({
   type: "postgres",
+     url: process.env.DATABASE_URL,
+   ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
   host: DB_HOST,
   port: DB_PORT,
   username: DB_USER,
