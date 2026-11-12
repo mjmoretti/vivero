@@ -32,6 +32,7 @@ export const createPreferenceService = async (
           failure: `${FRONT_URL}/payment/failure`,
           pending: `${FRONT_URL}/payment/pending`,
         },
+        auto_return: "approved",
       },
     });
 
