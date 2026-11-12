@@ -3,6 +3,13 @@ import { MP_ACCESS_TOKEN, FRONT_URL } from "../config/envs";
 
 const client = new MercadoPagoConfig({ accessToken: MP_ACCESS_TOKEN });
 
+// Deja la dirección del front siempre bien armada
+const baseUrl = (
+  /^https?:\/\//.test(FRONT_URL) ? FRONT_URL : `https://${FRONT_URL}`
+).replace(/\/+$/, "");
+
+const isLocal = baseUrl.includes("localhost");
+
 interface PaymentItem {
   id: number;
   name: string;
@@ -28,11 +35,11 @@ export const createPreferenceService = async (
         })),
         external_reference: String(orderId),
         back_urls: {
-          success: `${FRONT_URL}/payment/success`,
-          failure: `${FRONT_URL}/payment/failure`,
-          pending: `${FRONT_URL}/payment/pending`,
+          success: `${baseUrl}/payment/success`,
+          failure: `${baseUrl}/payment/failure`,
+          pending: `${baseUrl}/payment/pending`,
         },
-        auto_return: "approved",
+        ...(isLocal ? {} : { auto_return: "approved" as const }),
       },
     });
 

@@ -167,6 +167,16 @@ const CartPage = () => {
             {/* Total */}
             <div className="p-6 bg-gray-50 border-t border-gray-200">
               <div className="flex flex-col md:flex-row justify-between items-center">
+                <div className="bg-yellow-50 border border-yellow-300 text-yellow-800 text-sm rounded-md p-3 mb-4">
+  <p className="font-semibold mb-1">
+    ⚠️ Tienda de demostración: los pagos son de prueba
+  </p>
+  <p>
+    Pagá con la tarjeta 4509 9535 6623 3704, vencimiento 11/30, código 123,
+    titular APRO y DNI 12345678. No uses tarjetas reales.
+  </p>
+  <p>E-mail: test_user_3819693362@testuser.com</p>
+</div>
                 <div className="mb-4 md:mb-0">
                   <h2 className="text-lg font-semibold text-gray-800">
                     Total del carrito
