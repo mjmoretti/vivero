@@ -10,7 +10,7 @@ export const createPaymentService = async (
   orderId: number,
   token: string
 ): Promise<string> => {
-  const res = await fetch("http://localhost:3001/payments/create-preference", {
+  const res = await fetch("https://vivero-back-6wsh.onrender.com/payments/create-preference", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

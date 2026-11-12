@@ -2,7 +2,7 @@ import { IProduct } from "@/interfaces/IProducts"
 
 export const getAllProductsService = async (search?: string, categoryId?: number) => {
   try {
-    let url = 'http://localhost:3001/products'
+    let url = 'https://vivero-back-6wsh.onrender.com/products'
     
     if (search) url += `?search=${search}`
     else if (categoryId) url += `?categoryId=${categoryId}`

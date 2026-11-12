@@ -101,7 +101,7 @@ const AdminPage = () => {
     if (!result.isConfirmed) return;
 
     try {
-      const response = await fetch(`http://localhost:3001/products/${id}`, {
+      const response = await fetch(`https://vivero-back-6wsh.onrender.com/products/${id}`, {
         method: "DELETE",
         headers: { Authorization: dataUser!.token },
       });
@@ -133,8 +133,8 @@ const AdminPage = () => {
 
     try {
       const url = editingProduct
-        ? `http://localhost:3001/products/${editingProduct.id}`
-        : "http://localhost:3001/products";
+        ? `https://vivero-back-6wsh.onrender.com/products/${editingProduct.id}`
+        : "https://vivero-back-6wsh.onrender.com/products";
 
       const method = editingProduct ? "PATCH" : "POST";
 

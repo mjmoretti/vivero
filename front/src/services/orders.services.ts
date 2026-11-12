@@ -8,7 +8,7 @@ export const createOrder = async (
   token: string
 ) => {
   try {
-    const res = await fetch("http://localhost:3001/orders", {
+    const res = await fetch("https://vivero-back-6wsh.onrender.com/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +26,7 @@ export const createOrder = async (
 
 export const getAllOrders = async (token: string) => {
   try {
-    const res = await fetch("http://localhost:3001/users/orders", {
+    const res = await fetch("https://vivero-back-6wsh.onrender.com/users/orders", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

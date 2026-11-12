@@ -36,7 +36,7 @@ if (isLoading || !dataUser) return null
       const formData = new FormData()
       formData.append("image", file)
 
-      const response = await fetch("http://localhost:3001/users/image", {
+      const response = await fetch("https://vivero-back-6wsh.onrender.com/users/image", {
         method: "PATCH",
         headers: {
           Authorization: dataUser.token,
