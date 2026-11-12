@@ -165,47 +165,49 @@ const CartPage = () => {
             </div>
 
             {/* Total */}
-            <div className="p-6 bg-gray-50 border-t border-gray-200">
-              <div className="flex flex-col md:flex-row justify-between items-center">
-                <div className="bg-yellow-50 border border-yellow-300 text-yellow-800 text-sm rounded-md p-3 mb-4">
-  <p className="font-semibold mb-1">
-    ⚠️ Tienda de demostración: los pagos son de prueba
-  </p>
-  <p>
-    Pagá con la tarjeta 4509 9535 6623 3704, vencimiento 11/30, código 123,
-    titular APRO y DNI 12345678. No uses tarjetas reales.
-  </p>
-  <p>E-mail: test_user_3819693362@testuser.com</p>
+<div className="p-6 bg-gray-50 border-t border-gray-200">
+  {/* Cartel de demostración */}
+  <div className="bg-yellow-50 border border-yellow-300 text-yellow-800 text-sm rounded-md p-3 mb-6">
+    <p className="font-semibold mb-1">
+      ⚠️ Tienda de demostración: los pagos son de prueba
+    </p>
+    <p>
+      Pagá con la tarjeta 4509 9535 6623 3704, vencimiento 11/30, código 123,
+      titular APRO y DNI 12345678. No uses tarjetas reales.
+    </p>
+    <p>E-mail: test_user_3819693362@testuser.com</p>
+  </div>
+
+  <div className="flex flex-col md:flex-row justify-between items-center">
+    <div className="mb-4 md:mb-0">
+      <h2 className="text-lg font-semibold text-gray-800">
+        Total del carrito
+      </h2>
+
+      <p className="text-2xl font-bold text-gray-700">
+        ${getTotal()}
+      </p>
+    </div>
+
+    <div className="flex gap-3">
+      <button
+        onClick={clearCart}
+        disabled={isPaying}
+        className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md whitespace-nowrap"
+      >
+        Vaciar carrito
+      </button>
+
+      <button
+        onClick={handleCheckout}
+        disabled={isPaying}
+        className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-md whitespace-nowrap disabled:opacity-60"
+      >
+        {isPaying ? "Redirigiendo a Mercado Pago..." : "Finalizar compra"}
+      </button>
+    </div>
+  </div>
 </div>
-                <div className="mb-4 md:mb-0">
-                  <h2 className="text-lg font-semibold text-gray-800">
-                    Total del carrito
-                  </h2>
-
-                  <p className="text-2xl font-bold text-gray-700">
-                    ${getTotal()}
-                  </p>
-                </div>
-
-                <div className="flex gap-3">
-                  <button
-                    onClick={clearCart}
-                    disabled={isPaying}
-                    className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md"
-                  >
-                    Vaciar carrito
-                  </button>
-
-                  <button
-                    onClick={handleCheckout}
-                    disabled={isPaying}
-                    className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-md disabled:opacity-60"
-                  >
-                    {isPaying ? "Redirigiendo a Mercado Pago..." : "Finalizar compra"}
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
         )}
       </Container>
